@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service(value = "bookService")
 public class BookService {
 
     // Assume Array as a DataBase as for now
-    public static final List<Book> list = new ArrayList<>() ;
+    public static List<Book> list = new ArrayList<>() ;
 
     static {
         list.add(new Book(1,"Java Complete Reference", "xyz")) ;
@@ -34,5 +35,12 @@ public class BookService {
     public Book addBook(Book book){
         list.add(book) ;
         return book ;
+    }
+
+    // Delete Resource [ DELETE METHOD ]
+    public List<Book> deleteBook(int id){
+        Book book = null ;
+        list = list.stream().filter(e -> e.getBookId()!=id).collect(Collectors.toList());
+        return list ;
     }
 }
