@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(value = "bookingService")
-public class BookingService {
+@Service(value = "bookService")
+public class BookService {
 
     // Assume Array as a DataBase as for now
     public static final List<Book> list = new ArrayList<>() ;
@@ -28,5 +28,11 @@ public class BookingService {
     public Book getBookById(int id){
 
         return list.stream().filter(e -> e.getBookId() == id).findFirst().get() ;
+    }
+
+    // Create Resource [ POST METHOD ]
+    public Book addBook(Book book){
+        list.add(book) ;
+        return book ;
     }
 }

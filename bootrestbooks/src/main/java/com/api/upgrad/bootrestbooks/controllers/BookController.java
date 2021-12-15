@@ -1,12 +1,9 @@
 package com.api.upgrad.bootrestbooks.controllers;
 
 import com.api.upgrad.bootrestbooks.entities.Book;
-import com.api.upgrad.bootrestbooks.services.BookingService;
+import com.api.upgrad.bootrestbooks.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,7 +11,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    BookingService bookingService ;
+    BookService bookingService ;
 
     // Get All Books present in Array List
     @GetMapping("/books")
@@ -22,10 +19,17 @@ public class BookController {
         return this.bookingService.getAllBooks() ;
     }
 
-    // Get Book based on Id
+    // Get Book based on ID
     @GetMapping("/books/{id}")
     public Book getBookById(@PathVariable(name = "id") int id) {
         return bookingService.getBookById(id) ;
+    }
+
+    // Post new book
+    @PostMapping("/books")
+    public Book postNewBook(@RequestBody Book book){
+        Book b = bookingService.addBook(book) ;
+        return b ;
     }
 
 }
