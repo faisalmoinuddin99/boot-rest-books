@@ -37,4 +37,14 @@ public class BookController {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build() ;
        }
    }
+
+   @GetMapping("/books/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable(name = "id")int id){
+       Book book = bookService.getBookById(id) ;
+
+       if (book == null){
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).build() ;
+       }
+       return ResponseEntity.of(Optional.of(book)) ;
+   }
 }

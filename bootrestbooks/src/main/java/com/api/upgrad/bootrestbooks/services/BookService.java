@@ -25,4 +25,13 @@ public class BookService {
     public Book addBook(Book book){
         return bookDao.save(book) ;
     }
+
+    // Get Book By ID
+    public Book getBookById(int id){
+        Book b = bookDao.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("No Book Found for this Id:" +id)
+                ) ;
+        return b;
+    }
 }
