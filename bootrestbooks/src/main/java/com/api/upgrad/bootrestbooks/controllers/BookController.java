@@ -3,47 +3,38 @@ package com.api.upgrad.bootrestbooks.controllers;
 import com.api.upgrad.bootrestbooks.entities.Book;
 import com.api.upgrad.bootrestbooks.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookController {
 
-    @Autowired
-    BookService bookingService ;
+   @Autowired
+    BookService bookService ;
 
-    // Get All Books present in Array List
-    @GetMapping("/books")
-   public List<Book> getAllBooks(){
-        return this.bookingService.getAllBooks() ;
-    }
+   @GetMapping("/books")
+    public ResponseEntity<List<Book>> getAllBooks(){
+       List<Book> list = bookService.getAllBooks() ;
+       if (list.size() <= 0){
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).build() ;
+       }
+       return ResponseEntity.status(HttpStatus.OK).body(list) ;
+   }
 
-    // Get Book based on ID
-    @GetMapping("/books/{id}")
-    public Book getBookById(@PathVariable(name = "id") int id) {
-        return bookingService.getBookById(id) ;
-    }
-
-    // Post new book
-    @PostMapping("/books")
-    public Book postNewBook(@RequestBody Book book){
-        Book b = bookingService.addBook(book) ;
-        return b ;
-    }
-
-    // Delete Book based on ID
-    @DeleteMapping("/books/{id}")
-    public List<Book> deleteBook(@PathVariable(name = "id") int id){
-       
-        return bookingService.deleteBook(id) ;
-    }
-
-    // Update Book
-    @PutMapping("/books/{id}")
-    public Book updateBook(@RequestBody Book book, @PathVariable(name = "id")int id){
-        bookingService.updateBook(book,id);
-        return book ;
-    }
-
+   @PostMapping("/books")
+    public ResponseEntity<Book> addBook(@RequestBody Book book){
+       Book b = null ;
+       try {
+           b = bookService.addBook(book) ;
+           System.out.println(b);
+           return ResponseEntity.of(Optional.of(b)) ;
+       } catch (Exception e){
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build() ;
+       }
+   }
 }

@@ -1,6 +1,8 @@
 package com.api.upgrad.bootrestbooks.services;
 
+import com.api.upgrad.bootrestbooks.dao.BookDao;
 import com.api.upgrad.bootrestbooks.entities.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,47 +12,17 @@ import java.util.stream.Collectors;
 @Service(value = "bookService")
 public class BookService {
 
-    // Assume Array as a DataBase as for now
-    public static List<Book> list = new ArrayList<>() ;
+    // we need BookDao to interact with Database
+    @Autowired
+    BookDao bookDao ;
 
-    static {
-        list.add(new Book(1,"Java Complete Reference", "xyz")) ;
-        list.add(new Book(2,"Python Complete Reference", "abc")) ;
-        list.add(new Book(3,"C Complete Reference", "lmn")) ;
-        list.add(new Book(4,"C++ Complete Reference", "pqr")) ;
-    }
-
-    // get all books service
+    // Get all books
     public List<Book> getAllBooks(){
-        return list ;
+        return bookDao.findAll() ;
     }
 
-    // get book by id service
-    public Book getBookById(int id){
-
-        return list.stream().filter(e -> e.getBookId() == id).findFirst().get() ;
-    }
-
-    // Create Resource [ POST METHOD ]
+    // Adding the Book
     public Book addBook(Book book){
-        list.add(book) ;
-        return book ;
-    }
-
-    // Delete Resource [ DELETE METHOD ]
-    public List<Book> deleteBook(int id){
-        list = list.stream().filter(e -> e.getBookId()!=id).collect(Collectors.toList());
-        return list ;
-    }
-
-    // Update Resource [ PUT METHOD ]
-    public void updateBook(Book book, int id){
-        list = list.stream().map(b->{
-            if (b.getBookId() == id) {
-                b.setBookName(b.getBookName());
-                b.setAuthor(b.getAuthor());
-            }
-            return b ;
-        }).collect(Collectors.toList());
+        return bookDao.save(book) ;
     }
 }
