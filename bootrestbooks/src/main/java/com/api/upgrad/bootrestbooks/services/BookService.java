@@ -39,8 +39,18 @@ public class BookService {
 
     // Delete Resource [ DELETE METHOD ]
     public List<Book> deleteBook(int id){
-        Book book = null ;
         list = list.stream().filter(e -> e.getBookId()!=id).collect(Collectors.toList());
         return list ;
+    }
+
+    // Update Resource [ PUT METHOD ]
+    public void updateBook(Book book, int id){
+        list = list.stream().map(b->{
+            if (b.getBookId() == id) {
+                b.setBookName(b.getBookName());
+                b.setAuthor(b.getAuthor());
+            }
+            return b ;
+        }).collect(Collectors.toList());
     }
 }
