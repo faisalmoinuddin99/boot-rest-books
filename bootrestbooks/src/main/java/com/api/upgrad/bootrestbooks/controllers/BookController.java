@@ -47,4 +47,14 @@ public class BookController {
        }
        return ResponseEntity.of(Optional.of(book)) ;
    }
+   @DeleteMapping("/books/{id}")
+    public ResponseEntity deleteBook(@PathVariable(name = "id")int id){
+       try {
+           bookService.deleteBook(id);
+
+           return (ResponseEntity) ResponseEntity.status(HttpStatus.OK).build();
+       } catch (Exception e){
+           return (ResponseEntity) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+       }
+   }
 }

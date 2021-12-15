@@ -34,4 +34,9 @@ public class BookService {
                 ) ;
         return b;
     }
+
+    // Delete Book By Id
+    public void deleteBook(int id){
+        bookDao.deleteById(id);
+    }
 }
