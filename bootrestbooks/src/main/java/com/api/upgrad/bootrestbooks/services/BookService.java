@@ -39,4 +39,10 @@ public class BookService {
     public void deleteBook(int id){
         bookDao.deleteById(id);
     }
+
+    // Update Book
+    public Book updateBook(Book book, int id){
+        book.setBookId(id);
+        return bookDao.save(book) ;
+    }
 }
