@@ -1,6 +1,13 @@
 package com.api.upgrad.bootrestbooks.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookId ;
     private String bookName ;
     private String author ;
