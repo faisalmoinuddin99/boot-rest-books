@@ -8,11 +8,15 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int bookId ;
     private String bookName ;
-    private String author ;
 
-    public Book(int bookId, String bookName, String author) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
+    private Author author ;
+
+    public Book(int bookId, String bookName, Author author) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.author = author;
@@ -38,11 +42,11 @@ public class Book {
         this.bookName = bookName;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -51,7 +55,7 @@ public class Book {
         return "Book{" +
                 "bookId=" + bookId +
                 ", bookName='" + bookName + '\'' +
-                ", author='" + author + '\'' +
+                ", author=" + author +
                 '}';
     }
 }
