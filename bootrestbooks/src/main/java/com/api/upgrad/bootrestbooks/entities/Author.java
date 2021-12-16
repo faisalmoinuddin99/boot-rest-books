@@ -14,6 +14,8 @@ public class Author {
     private String firstName ;
     private String lastName ;
     private String language ;
+    @OneToOne(mappedBy = "author")
+    private Book book ;
 
     public Author() {
     }
